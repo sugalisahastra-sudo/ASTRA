@@ -1,0 +1,18 @@
+{
+  "name": "ASTRA Time Tracker",
+  "short_name": "ASTRA",
+  "description": "Track your time, targets and daily rewards.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "astra-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
