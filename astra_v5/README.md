@@ -1,4 +1,4 @@
-# ASTRA v4 — Automatic rewards and daily rollover
+# ASTRA v5 — Automatic rollover improvements
 
 ## Changes
 - Removed the manual Claim Reward button. Daily reward is awarded automatically when every activity is completed and meets its threshold.
