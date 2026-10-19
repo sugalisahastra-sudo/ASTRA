@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="astra-icon.svg" type="image/svg+xml">
+<title>ASTRA — Your time. Your rules.</title>
+<style>
+:root{
+  --yellow:#ffe45c;--yellow-soft:#fff4a8;--yellow-mid:#ffd92e;--yellow-deep:#e6bd00;
+  --white:#fff;--black:#050505;--line:#ffe45c;--muted:#dedede;--radius:18px;
+}
+*{box-sizing:border-box}
+html{background:var(--black);color:var(--white);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--black);color:var(--white);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:var(--black)}
+button{cursor:pointer;border:2px solid var(--black);border-radius:12px;padding:12px 14px;font-weight:750;background:var(--yellow)}
+button:active{transform:translateY(1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.secondary{background:var(--white)}.danger{background:var(--yellow-soft)}
+header{background:var(--black);border-bottom:2px solid var(--yellow);padding:18px max(16px,calc((100% - 1080px)/2));}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;flex:0 0 48px}.brand h1{font-size:22px;letter-spacing:3px;margin:0;font-weight:900}.brand p{color:var(--white);margin:1px 0 0;font-size:12px}
+main{max-width:1080px;margin:22px auto;padding:0 16px calc(36px + env(safe-area-inset-bottom))}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.date{font-size:13px;color:var(--white)}h2{font-size:20px;margin:0 0 12px;letter-spacing:-.3px}h3{font-size:16px;margin:0}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat,.panel,.activity{background:var(--yellow);color:var(--black);border:2px solid var(--yellow);border-radius:var(--radius)}
+.stat{padding:16px}.stat .label{font-size:12px;font-weight:650;margin-bottom:7px}.stat .value{font-size:25px;font-weight:900;letter-spacing:-.7px}.stat .sub{font-size:11px;margin-top:5px}
+.columns{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.62fr);gap:14px;margin-top:16px}.panel{padding:15px;margin-bottom:14px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.muted{color:inherit;font-size:12px;opacity:.82}
+.activity-list{display:grid;gap:10px}.activity{padding:14px;background:var(--yellow)}.activity-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.activity-name{font-weight:850;font-size:16px;overflow-wrap:anywhere}.activity-meta{font-size:12px;margin-top:4px}
+.status{font-size:11px;font-weight:850;border:1.5px solid var(--black);color:var(--black);border-radius:99px;padding:5px 9px;background:var(--white);white-space:nowrap}.status.running,.status.done,.status.over{background:var(--yellow-soft)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.check{border:1.5px solid var(--black);border-radius:12px;padding:10px;display:flex;gap:9px;align-items:center;background:var(--white);color:var(--black);min-width:0}.check input{width:19px;height:19px;flex:0 0 19px;accent-color:#111}.check label{font-weight:750;cursor:pointer;min-width:0}.check small{display:block;font-size:11px;font-weight:450;overflow-wrap:anywhere}
+.duration{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:10px;border-top:1.5px solid var(--black)}.duration strong{font-size:17px}
+.bars{display:grid;gap:14px}.bar-row{display:grid;gap:6px}.bar-label{display:flex;justify-content:space-between;gap:8px;font-size:12px}.track{height:10px;background:var(--white);border:1.5px solid var(--black);border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--yellow-deep);border-right:1.5px solid var(--black)}
+.empty{border:1.5px dashed var(--yellow);border-radius:14px;padding:23px 14px;text-align:center;font-size:13px;background:#111;color:var(--white)}
+form{display:grid;gap:9px}label.field{display:grid;gap:6px;font-size:12px;font-weight:800}input[type=text],input[type=number],select{width:100%;border:1.5px solid var(--black);border-radius:10px;background:var(--white);padding:9px 10px;color:var(--black);outline:none;min-height:40px}
+input:focus,select:focus{box-shadow:0 0 0 3px var(--yellow-mid)}.inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toggle{display:flex;gap:9px;align-items:flex-start;font-size:12px}.toggle input{margin-top:3px;width:18px;height:18px;accent-color:#111}.toggle strong{display:block;font-size:13px}
+.form-note{font-size:12px;margin:0;opacity:.85}.notice{font-size:12px;min-height:17px;margin:9px 0 0;font-weight:650}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:10px}.history-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--black);font-size:12px}.history-item:last-child{border-bottom:0}
+.color-options{display:flex;flex-wrap:wrap;gap:8px}.color-choice{display:flex;align-items:center;gap:6px;border:1.5px solid var(--black);border-radius:999px;padding:7px 10px;background:var(--white);font-size:12px;font-weight:750;cursor:pointer}.color-choice input{accent-color:#111;width:16px;height:16px;margin:0}.swatch{width:16px;height:16px;border:1.5px solid var(--black);border-radius:50%;display:inline-block}
+.footer{font-size:11px;text-align:center;margin-top:20px;color:var(--white)}
+@media(max-width:760px){header{padding:14px 16px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.columns{grid-template-columns:1fr;gap:0}.panel{padding:15px;margin-bottom:12px}.stat{padding:13px}.stat .value{font-size:22px}main{margin-top:16px}.topline{align-items:flex-start}.activity{padding:13px}}
+@media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.stat .value{font-size:20px}.checks{gap:6px}.check{padding:9px 6px;gap:6px}.inline{grid-template-columns:1fr 1fr}.panel-head{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="brand">
+<svg class="logo" viewBox="0 0 64 64" role="img" aria-label="ASTRA star logo">
+  <rect x="3" y="3" width="58" height="58" rx="17" fill="#111"/>
+  <path d="M31.8 14.5 Q32.2 13.1 32.8 14.8 L37.3 25.8 Q37.8 26.8 39 26.8 L50.4 27.4 Q52 27.5 50.7 28.6 L41.7 36.1 Q40.8 36.8 41.2 38 L44.3 48.5 Q44.8 50.1 43.4 49.2 L33 42.3 Q32 41.7 31 42.3 L20.6 49.2 Q19.2 50.1 19.7 48.5 L22.8 38 Q23.2 36.8 22.3 36.1 L13.3 28.6 Q12 27.5 13.6 27.4 L25 26.8 Q26.2 26.8 26.7 25.8 Z" fill="#ffe45c" stroke="#ffe45c" stroke-linejoin="round"/>
+  <path d="M32 6 V1 M48 15 L53 10 M54 32 H61" fill="none" stroke="#ffe45c" stroke-width="3" stroke-linecap="round"/>
+</svg>
+<div><h1>ASTRA</h1><p>Your time. Your rules.</p></div>
+</div></header>
+<main>
+  <div class="topline"><div><div class="date" id="todayLabel"></div><h2 style="margin:4px 0 0">Daily overview</h2></div><button class="secondary" id="exportBtn" type="button">Export data</button></div>
+  <section class="grid" aria-label="Daily summary">
+    <div class="stat"><div class="label">Activities completed</div><div class="value" id="completedStat">0/0</div><div class="sub" id="runningStat">Nothing running</div></div>
+    <div class="stat"><div class="label">Time tracked today</div><div class="value" id="trackedStat">0m</div><div class="sub">Completed sessions + active timers</div></div>
+    <div class="stat"><div class="label">Points balance</div><div class="value" id="pointsStat">0 pts</div><div class="sub">Only successful targets earn points</div></div>
+    <div class="stat"><div class="label">Rewards earned</div><div class="value" id="rewardStat">₹0</div><div class="sub">Virtual balance, not a payment</div></div>
+  </section>
+  <div class="columns">
+    <section>
+      <div class="panel">
+        <div class="panel-head"><div><h2>My activities</h2><div class="muted">Start before you begin. End when you finish.</div></div></div>
+        <div class="activity-list" id="activityList"></div><p class="notice" id="notice" role="status"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h2>Daily report</h2><div class="muted">Each activity is shown as a share of 1,440 minutes.</div></div><span class="status" id="dayCoverage">0% tracked</span></div>
+        <div class="bars" id="dailyBars"></div><div class="duration"><span class="muted">Untracked time</span><strong id="untracked">24h 00m</strong></div>
+        <p class="form-note" style="margin-top:10px">Overlapping sessions can make activity percentages total more than 100%.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h2>History</h2><div class="muted">Saved daily snapshots on this browser.</div></div><button class="secondary" id="clearHistoryBtn" type="button">Clear</button></div><div id="historyList"></div>
+      </div>
+    </section>
+    <aside>
+      <div class="panel">
+        <h2>Create an activity</h2>
+        <form id="activityForm">
+          <label class="field">Activity name<input id="activityName" type="text" maxlength="60" placeholder="e.g. Studying, sleeping" required></label>
+          <div class="inline">
+            <label class="field">Threshold<input id="threshold" type="number" min="1" max="1440" value="60" required></label>
+            <label class="field">Unit<select id="thresholdUnit"><option value="minutes">Minutes</option><option value="hours">Hours</option></select></label>
+          </div>
+          <label class="field">Threshold rule<select id="thresholdMode"><option value="minimum">Minimum target — meet or exceed</option><option value="maximum">Maximum limit — stay at or below</option></select></label>
+          <p class="form-note">Minimum: sleep at least 8 hours. Maximum: keep scrolling under 1 hour.</p>
+          <label class="field">Activity label color</label>
+          <div class="color-options" id="colorOptions">
+            <label class="color-choice"><input type="radio" name="activityColor" value="#ffe45c" checked><span class="swatch" style="background:#ffe45c"></span>Yellow</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#ff595e"><span class="swatch" style="background:#ff595e"></span>Red</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#4d96ff"><span class="swatch" style="background:#4d96ff"></span>Blue</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#6bcb77"><span class="swatch" style="background:#6bcb77"></span>Green</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#b983ff"><span class="swatch" style="background:#b983ff"></span>Purple</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#ff924c"><span class="swatch" style="background:#ff924c"></span>Orange</label>
+            <label class="color-choice"><input type="radio" name="activityColor" value="#ff8fab"><span class="swatch" style="background:#ff8fab"></span>Pink</label>
+          </div>
+          <label class="toggle"><input id="allowBeyond" type="checkbox"><span><strong>Allow time beyond the threshold</strong>For a maximum-limit activity, excess time won't trigger a penalty. It still won't earn points if the target fails.</span></label>
+          <button type="submit">+ Add activity</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Reward settings</h2>
+        <div class="settings">
+          <label class="field">Currency<select id="currency"><option value="₹">INR ₹</option><option value="$">USD $</option><option value="€">EUR €</option><option value="£">GBP £</option></select></label>
+          <label class="field">Reward per day<input id="rewardAmount" type="number" min="0" step="0.01" value="1"></label>
+          <label class="field">Points per successful activity<input id="pointsPerActivity" type="number" min="0" step="1" value="1"></label>
+          <label class="field">Penalty for failed maximum limit<select id="penalty"><option value="0">0 points</option><option value="1" selected>1 point</option><option value="2">2 points</option></select></label>
+        </div>
+        <p class="form-note" style="margin-top:12px">Points are awarded per activity only after its threshold is met. The daily currency reward requires every activity to meet its rule. Claim once per day.</p>
+        <div class="status" id="rewardStatus" style="margin-top:14px;display:block;white-space:normal">Reward status: waiting for completed targets</div><p class="notice" id="rewardNotice" role="status"></p>
+      </div>
+      <div class="panel">
+        <h2>Data & privacy</h2><p class="form-note">Records stay in this browser. They are not uploaded to a server. Export a backup regularly.</p>
+        <p class="form-note" style="margin-top:13px">ASTRA automatically saves completed daily records and starts a fresh day. Your history is preserved.</p>
+        <button class="danger" id="wipeBtn" type="button" style="width:100%;margin-top:8px">Delete all local data</button>
+      </div>
+    </aside>
+  </div>
+  <div class="footer">ASTRA · Free personal time tracker · Local browser storage</div>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const todayKey = () => { const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+  const defaults=()=>({day:todayKey(),activities:[],history:[],points:0,rewards:0,claims:[],settings:{currency:'₹',rewardAmount:1,penalty:1,pointsPerActivity:1}});
+  let state;try{state=JSON.parse(localStorage.getItem('astra-v3'))||defaults();}catch{state=defaults();}
+  state.settings={...defaults().settings,...(state.settings||{})};state.history=state.history||[];state.claims=state.claims||[];state.activities=state.activities||[];
+  function rollDayIfNeeded(){
+    const today=todayKey();
+    if(state.day===today)return false;
+
+    // Process every missed calendar day in order, even after the browser was closed.
+    let cursor=state.day;
+    let changed=false;
+    const dayStart = key => new Date(key+'T00:00:00').getTime();
+    const nextDayKey = key => {
+      const d=new Date(key+'T00:00:00');
+      d.setDate(d.getDate()+1);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    };
+
+    // Recover safely if stored date data is malformed.
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(cursor) || !Number.isFinite(dayStart(cursor))){
+      state.day=today;
+      state.activities=(state.activities||[]).map(a=>({...a,startAt:null,endAt:null,spent:0,penalized:false,awarded:false}));
+      return true;
+    }
+
+    while(cursor!==today){
+      const cutoff=dayStart(nextDayKey(cursor));
+      const archived=JSON.parse(JSON.stringify(state.activities||[]));
+
+      archived.forEach(a=>{
+        if(a.startAt&&!a.endAt){
+          a.endAt=cutoff;
+          a.spent=mins(cutoff-a.startAt);
+          const ok=a.mode==='maximum'?a.spent<=a.threshold:a.spent>=a.threshold;
+          if(ok&&!a.awarded){
+            state.points+=Number(state.settings.pointsPerActivity)||0;
+            a.awarded=true;
+          } else if(!ok&&a.mode==='maximum'&&a.spent>a.threshold&&!a.allowBeyond&&!a.penalized){
+            state.points-=Number(state.settings.penalty)||0;
+            a.penalized=true;
+          }
+        }
+      });
+
+      // Save every day, including days on which no activity was completed.
+      state.history=(state.history||[]).filter(h=>h.day!==cursor);
+      state.history.unshift({day:cursor,activities:archived,savedAt:Date.now()});
+      state.history=state.history.slice(0,120);
+
+      // Evaluate the reward using this archived day's records before resetting them.
+      evaluateAutomaticReward(cursor,archived);
+
+      // Carry an activity that was running at midnight into the next day.
+      state.activities=(state.activities||[]).map(a=>{
+        if(a.startAt&&!a.endAt){
+          return {...a,startAt:cutoff,endAt:null,spent:0,penalized:false,awarded:false};
+        }
+        return {...a,startAt:null,endAt:null,spent:0,penalized:false,awarded:false};
+      });
+
+      cursor=nextDayKey(cursor);
+      state.day=cursor;
+      changed=true;
+    }
+    return changed;
+  }
+  function save(){localStorage.setItem('astra-v3',JSON.stringify(state));}
+  function mins(ms){return Math.max(0,Math.floor(ms/60000));}
+  function duration(n){n=Math.max(0,Math.floor(n));const h=Math.floor(n/60),m=n%60;return h?`${h}h ${String(m).padStart(2,'0')}m`:`${m}m`;}
+  function stamp(t){return t?new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';}
+  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function notice(msg){$('notice').textContent=msg;}
+  function meets(a){if(!a.endAt)return false;return a.mode==='maximum'?a.spent<=a.threshold:a.spent>=a.threshold;}
+  function awardActivity(a){if(a.endAt&&!a.awarded&&meets(a)){state.points+=Number(state.settings.pointsPerActivity)||0;a.awarded=true;}}
+  function archiveDay(manual=true){const key=state.day||todayKey();if((state.activities||[]).some(a=>a.endAt)||manual){state.history=(state.history||[]).filter(h=>h.day!==key);state.history.unshift({day:key,activities:JSON.parse(JSON.stringify(state.activities||[])),savedAt:Date.now()});state.history=state.history.slice(0,120);}}
+  function activeMinutes(a){return a.endAt?Number(a.spent)||0:a.startAt?mins(Date.now()-a.startAt):0;}
+  function evaluateAutomaticReward(dayKey=state.day, activities=state.activities){
+    const eligible=activities.length>0&&activities.every(a=>a.endAt&&meets(a));
+    if(eligible&&!state.claims.includes(dayKey)){
+      state.claims.push(dayKey);
+      state.rewards+=Number(state.settings.rewardAmount)||0;
+      state.rewardEvents=state.rewardEvents||[];
+      state.rewardEvents.push({day:dayKey,amount:Number(state.settings.rewardAmount)||0,currency:state.settings.currency});
+      return true;
+    }
+    return false;
+  }
+  function render(){
+    $('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const acts=state.activities,done=acts.filter(a=>a.endAt).length,running=acts.filter(a=>a.startAt&&!a.endAt).length,total=acts.reduce((s,a)=>s+activeMinutes(a),0);
+    $('completedStat').textContent=`${done}/${acts.length}`;$('runningStat').textContent=running?`${running} timer${running===1?'':'s'} running`:acts.length?'No timers running':'Add your first activity';
+    $('trackedStat').textContent=duration(total);$('pointsStat').textContent=`${state.points} pts`;$('rewardStat').textContent=`${state.settings.currency}${Number(state.rewards).toFixed(2)}`;
+    $('activityList').innerHTML=acts.length?acts.map(a=>{
+      const run=!!a.startAt&&!a.endAt,ended=!!a.endAt,success=meets(a),over=ended&&a.mode==='maximum'&&a.spent>a.threshold&&!a.allowBeyond;
+      const status=ended?(success?'Target met':over?'Over limit':'Target missed'):run?'Running':'Not started';
+      const color=a.color||'#ffe45c';
+      return `<article class="activity" data-id="${esc(a.id)}" style="background:${color}">
+      <div class="activity-top"><div><div class="activity-name">${esc(a.name)}</div><div class="activity-meta">${a.mode==='minimum'?'Minimum target':'Maximum limit'}: ${duration(a.threshold)}${a.allowBeyond?' · overtime allowed':''}</div></div><span class="status ${run?'running':ended?(success?'done':'over'):''}">${status}</span></div>
+      <div class="checks"><div class="check"><input type="checkbox" data-action="start" ${a.startAt?'checked':''} ${a.startAt?'disabled':''} id="start-${esc(a.id)}"><label for="start-${esc(a.id)}">Start<small>${stamp(a.startAt)}</small></label></div>
+      <div class="check"><input type="checkbox" data-action="end" ${ended?'checked':''} ${(!a.startAt||ended)?'disabled':''} id="end-${esc(a.id)}"><label for="end-${esc(a.id)}">End<small>${stamp(a.endAt)}</small></label></div></div>
+      <div class="duration"><span>Time spent</span><strong>${duration(activeMinutes(a))}</strong></div>
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:10px"><span class="form-note">${a.awarded?'+'+(Number(state.settings.pointsPerActivity)||0)+' point(s) earned':ended?(success?'Target met; no duplicate points':`No points: target not met`):run?'Timer active':'Ready to start'}</span><button class="secondary" data-action="remove" type="button" style="padding:7px 10px;font-size:12px">Remove</button></div>
+      </article>`;
+    }).join(''):'<div class="empty">No activities yet. Create one to begin tracking.</div>';
+    const complete=acts.filter(a=>a.endAt&&a.spent>0);
+    $('dailyBars').innerHTML=complete.length?complete.map(a=>`<div class="bar-row"><div class="bar-label"><span>${esc(a.name)}</span><strong>${duration(a.spent)} · ${(a.spent/1440*100).toFixed(1)}%</strong></div><div class="track"><div class="fill" style="width:${Math.min(100,a.spent/1440*100)}%"></div></div></div>`).join(''):'<div class="empty">Complete an activity to see your time breakdown.</div>';
+    $('dayCoverage').textContent=`${(total/1440*100).toFixed(1)}% tracked`;$('untracked').textContent=duration(Math.max(0,1440-total));
+    $('historyList').innerHTML=state.history.length?state.history.slice(0,10).map(h=>{const sum=(h.activities||[]).reduce((s,a)=>s+(a.endAt?Number(a.spent)||0:0),0);return `<div class="history-item"><span><strong>${esc(h.day)}</strong><br><span>${(h.activities||[]).filter(a=>a.endAt).length} completed sessions</span></span><strong>${duration(sum)}</strong></div>`;}).join(''):'<div class="empty">Saved days will appear here.</div>';
+    $('currency').value=state.settings.currency;$('rewardAmount').value=state.settings.rewardAmount;$('penalty').value=String(state.settings.penalty);$('pointsPerActivity').value=state.settings.pointsPerActivity;
+    const claimed=state.claims.includes(state.day);
+    const eligible=acts.length>0&&acts.every(a=>a.endAt&&meets(a));
+    $('rewardStatus').textContent=claimed?'Daily reward automatically awarded for today.':eligible?'All targets met — daily reward awarded automatically.':'Daily reward will be awarded automatically when every activity meets its target.';
+    save();
+  }
+  $('activityForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=$('activityName').value.trim();let threshold=Number($('threshold').value);if($('thresholdUnit').value==='hours')threshold*=60;
+    if(!name||!Number.isFinite(threshold)||threshold<1||threshold>1440){notice('Enter a name and a threshold between 1 minute and 24 hours.');return;}
+    const color=document.querySelector('input[name="activityColor"]:checked').value;
+    state.activities.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,threshold,mode:$('thresholdMode').value,allowBeyond:$('allowBeyond').checked,color,startAt:null,endAt:null,spent:0,penalized:false,awarded:false});
+    $('activityForm').reset();$('threshold').value=60;notice('Activity added.');render();
+  });
+  $('activityList').addEventListener('change',e=>{
+    const action=e.target.dataset.action;if(!action)return;const card=e.target.closest('[data-id]'),a=state.activities.find(x=>x.id===card.dataset.id);if(!a)return;
+    if(action==='start'&&e.target.checked&&!a.startAt){a.startAt=Date.now();notice(`${a.name}: start time recorded.`);}
+    if(action==='end'&&e.target.checked&&a.startAt&&!a.endAt){
+      a.endAt=Date.now();a.spent=mins(a.endAt-a.startAt);
+      const success=meets(a);
+      if(success)awardActivity(a);
+      else if(a.mode==='maximum'&&a.spent>a.threshold&&!a.allowBeyond&&!a.penalized){state.points-=Number(state.settings.penalty)||0;a.penalized=true;}
+      notice(success?`${a.name}: target met. Points awarded.`:`${a.name}: target not met. No points awarded.`);
+      if(evaluateAutomaticReward(state.day))$('rewardNotice').textContent=`All targets met. ${state.settings.currency}${Number(state.settings.rewardAmount).toFixed(2)} awarded automatically.`;
+    }
+    render();
+  });
+  $('activityList').addEventListener('click',e=>{const btn=e.target.closest('[data-action="remove"]');if(!btn)return;const card=btn.closest('[data-id]'),a=state.activities.find(x=>x.id===card.dataset.id);if(a&&confirm(`Remove "${a.name}" and its current session?`)){state.activities=state.activities.filter(x=>x.id!==a.id);render();notice('Activity removed.');}});
+  ['currency','rewardAmount','penalty','pointsPerActivity'].forEach(id=>$(id).addEventListener('change',()=>{state.settings.currency=$('currency').value;state.settings.rewardAmount=Math.max(0,Number($('rewardAmount').value)||0);state.settings.penalty=Number($('penalty').value)||0;state.settings.pointsPerActivity=Math.max(0,Number($('pointsPerActivity').value)||0);save();render();}));
+  $('clearHistoryBtn').addEventListener('click',()=>{if(confirm('Clear all saved daily history? Current activities remain.')){state.history=[];render();}});
+  $('wipeBtn').addEventListener('click',()=>{if(confirm('Delete ALL ASTRA data from this browser? Export a backup first if needed.')){state=defaults();save();$('rewardNotice').textContent='';notice('All local data deleted.');render();}});
+  $('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`astra-backup-${todayKey()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+  // Battery-conscious updates: don't repaint or write storage continuously in the background.
+  let ticker=null;
+  function stopTicker(){if(ticker){clearInterval(ticker);ticker=null;}}
+  function startTicker(){stopTicker();if(!document.hidden)ticker=setInterval(()=>{if(document.hidden){stopTicker();return;}rollDayIfNeeded();render();},60000);}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTicker();else{rollDayIfNeeded();evaluateAutomaticReward(state.day);render();startTicker();}});
+  rollDayIfNeeded();evaluateAutomaticReward(state.day);render();startTicker();
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
